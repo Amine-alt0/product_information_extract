@@ -9,12 +9,24 @@ setup_logger()
 logger = logging.getLogger(__name__)
 
 
-def main():
-    llm = LLMService()
-    resolver=EquipementResolver(llm_service=llm,)
-    response = resolver.resolve("reactor")
+from utils.tavily_search_provider import TavilySearch
 
-    print(response)
+
+
+def main():
+
+    provider = TavilySearch()
+
+    results = provider.search(
+        "Grundfos CR 15-4 centrifugal pump specifications",
+        max_results=5
+    )
+
+    for result in results:
+        print("\nTITLE:", result.get("title"))
+        print("URL:", result.get("url"))
+        print("SCORE:", result.get("score"))
+        print("CONTENT:", result.get("content", "")[:300])
 
 
 if __name__ == "__main__":

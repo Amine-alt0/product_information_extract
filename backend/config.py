@@ -14,3 +14,5 @@ OPENROUTER_MODEL = os.getenv(
 OPENROUTER_BASE_URL = os.getenv(
     "OPENROUTER_BASE_URL"
 )
+
+TAVILY_API_KEY=os.getenv("TAVILY_API_KEY")
