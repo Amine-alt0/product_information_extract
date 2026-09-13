@@ -11,7 +11,7 @@ class TavilySearch:
 
     def __init__(self):
         self.api_key = TAVILY_API_KEY
-
+        self._cache={}
         if not self.api_key:
             raise ValueError("TAVILY_API_KEY is not configured")
 
@@ -22,7 +22,16 @@ class TavilySearch:
         logger.info(
             "Tavily search provider initialized"
         )
-
+    def build_cache_key(self, query, search_depth, max_results, include_domains, exclude_domains, topic, time_range):
+        return (
+        query,
+        search_depth,
+        max_results,
+        tuple(sorted(include_domains)) if include_domains else None,
+        tuple(sorted(exclude_domains)) if exclude_domains else None,
+        topic,
+        time_range,
+    )
     def search(
         self,
         query: str,
@@ -32,12 +41,14 @@ class TavilySearch:
         exclude_domains: list[str] | None = None,
         topic: str = "general",
         time_range: str | None = None,
-    ):
+    ):  
+        key=self.build_cache_key(query, search_depth, max_results, include_domains, exclude_domains, topic, time_range)
         logger.info(
-            "Searching Tavily: %s",
+            "Searching Tavily: %s ",
             query
         )
-
+        if key in self._cache:
+            return self._cache[key]
         response=self.client.search(
             query=query,
             search_depth=search_depth,
@@ -47,4 +58,5 @@ class TavilySearch:
             topic=topic,
             time_range=time_range,
         )
+        self._cache[key]=response.get("resultst" , [])
         return response.get("results", [])

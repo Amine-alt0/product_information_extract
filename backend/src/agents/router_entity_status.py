@@ -1,5 +1,6 @@
 import os 
-from src.agents.validator_equipment import Equipemenentity
+from src.agents.validator_equipment import ValidatorEquipment
+from src.agents.equipment_resolver import EquipementResolver
 import logging
 import json
 from datetime import datetime, timezone
@@ -10,12 +11,12 @@ class RouterEntityType:
     def __init__(self,log_path="router_decisions.jsonl"):
         self.log_path = log_path
         pass
-    def route(self, entity: Equipemenentity) -> str:
+    def route(self, entity: EquipementResolver) -> str:
         decision = self.planner(entity)
         self._log(entity, decision)
         return decision
 
-    def planner(self,entity:Equipemenentity):
+    def planner(self,entity:EquipementResolver):
         
         if (
         entity.manufacturer
@@ -33,7 +34,7 @@ class RouterEntityType:
             return "UNCERTAIN"
 
         return "GENERAL"
-    def _log(self, entity: Equipemenentity, decision: str):
+    def _log(self, entity: EquipementResolver, decision: str):
         record = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "input": entity.model_dump(),

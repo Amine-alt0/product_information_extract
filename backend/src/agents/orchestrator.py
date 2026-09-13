@@ -1,32 +1,30 @@
 import os 
 import logging
-from agents.equipment_resolver import Equipemenentity
-from agents.router_entity_status import RouterEntityType
-from validator_equipment import ValidatorEquipment
-
+from src.agents.equipment_resolver import EquipementResolver
+from src.agents.router_entity_status import RouterEntityType
+from src.agents.validator_equipment import ValidatorEquipment
+from src.agents.specific_search import run_specific_research
+from utils.tavily_search_provider import TavilySearch
 logger=logging.getLogger(__name__)
 
 
-class RouterSearchPlan:
-    def __init__(self):
-        pass
-    def process_equipment(name: str, resolver, router, validator):
-        entity = resolver.resolve(name)
-        decision = router.route(entity)
 
-        if decision == "SPECIFIC":
-            return run_specific_research(entity, sources=[])
+def process_equipment(name: str, resolver, router, validator, tavily:TavilySearch):
+    entity = resolver.resolve(name)
+    decision = router.route(entity)
 
-        if decision == "UNCERTAIN":
-            result = validator.validate(entity)
+    if decision == "SPECIFIC":
+        return run_specific_research(entity, sources=[], tavily_search=tavily)
+    if decision == "UNCERTAIN":
+        result = validator.validate(entity)
 
-            if result["status"] == "VALID":
-                entity.manufacturer = result["manufacturer"] or entity.manufacturer
-                entity.model = result["model"] or entity.model
-                return run_specific_research(entity, sources=result["sources"])
-            else:
-                return run_general_research(entity, sources=result["sources"])
+        if result["status"] == "VALID":
+            entity.manufacturer = result["manufacturer"] or entity.manufacturer
+            entity.model = result["model"] or entity.model
+            return run_specific_research(entity, sources=result["sources"])
+        else:
+            return run_general_research(entity, sources=result["sources"])
 
-        # decision == "GENERAL"
-        return run_general_research(entity, sources=[])
+    # decision == "GENERAL"
+    return run_general_research(entity, sources=[])
             

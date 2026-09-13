@@ -4,10 +4,10 @@ from pydantic import BaseModel
 from logger import setup_logger
 from utils.llm_service import LLMService
 import json
-from agents.equipment_resolver import Equipemenentity
+from src.agents.equipment_resolver import EquipementResolver,Equipemenentity
 from utils.tavily_search_provider import TavilySearch
 from utils.llm_service import LLMService
-
+from utils.formatting_results import format_search_results
 
 logger=logging.getLogger(__name__)
 
@@ -46,11 +46,11 @@ class ValidationResult(BaseModel):
     evidence_sources: list[dict]  # the Tavily results, kept for reuse
     
 class ValidatorEquipment:
-    def __init__(self,tavily_search:TavilySearch,llm_service):
-        self.tavily_search=TavilySearch()
-        self.llm_service=LLMService()
+    def __init__(self,tavily_search,llm_service):
+        self.tavily_search=tavily_search
+        self.llm_service=llm_service
         pass
-    def build_validation_query(entity: Equipemenentity) -> str:
+    def build_validation_query(self,entity: EquipementResolver) -> str:
         parts = []
 
         anchor = entity.model or entity.manufacturer or entity.normalized_name
@@ -67,26 +67,11 @@ class ValidatorEquipment:
 
         return " ".join(parts)
     
-    
-    def format_search_results(results: list[dict]) -> str:
-        if not results:
-            return "Aucun résultat trouvé."
-
-        blocks = []
-        for i, r in enumerate(results, start=1):
-            blocks.append(
-                f"[{i}] {r.get('title', '')}\n"
-                f"URL : {r.get('url', '')}\n"
-                f"Extrait : {r.get('content', '')}\n"
-            )
-        return "\n".join(blocks)
-    
-    
-    def validate(self,entity:Equipemenentity)->dict:
+    def validate(self,entity:EquipementResolver)->dict:
         logger.info(
             " cheking the results... "
         )
-        query =build_validation_query(entity)
+        query=self.build_validation_query(entity)
         result=self.tavily_search.search(query)
         
         
@@ -104,7 +89,7 @@ class ValidatorEquipment:
         except json.JSONDecodeError:
             logger.warning("Failed to parse validator response: %s", response)
             return {"status": "STILL_UNCERTAIN", "manufacturer": None, "model": None,
-                    "justification": "Réponse invalide du LLM", "sources": results}
+                    "justification": "Réponse invalide du LLM", "sources": result}
 
         return {
             "status": parsed["status"],

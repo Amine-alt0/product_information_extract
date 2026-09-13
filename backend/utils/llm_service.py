@@ -17,6 +17,7 @@ class LLMService:
             api_key=OPENROUTER_API_KEY,
             base_url=OPENROUTER_BASE_URL,
             model=OPENROUTER_MODEL,
+            timeout=30
         )
 
         logger.info("LLM service initialized")

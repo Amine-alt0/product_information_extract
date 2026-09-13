@@ -145,6 +145,9 @@ class EquipementResolver:
         """
         
         response=self.llm_service.invoke(full_prompt)
+        if not response or not response.strip():
+          logger.error("LLM returned an empty response for: %s", EquipementName)
+          raise ValueError("Empty response from LLM")
         data=json.loads(response)
         result=Equipemenentity(**data)
         
