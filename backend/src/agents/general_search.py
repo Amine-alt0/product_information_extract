@@ -4,7 +4,7 @@ from src.agents.equipment_resolver import Equipemenentity,EquipementResolver
 from utils.tavily_search_provider import TavilySearch
 from validator_equipment import format_search_result
 logger=logging.getLogger(__name__)
-from utils.formatting_results import format_search_result
+from utils.utility_funcs import format_search_result
 from utils.tavily_search_provider import TavilySearch
 from utils.llm_service import LLMService
 

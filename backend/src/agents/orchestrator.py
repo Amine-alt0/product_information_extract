@@ -5,16 +5,17 @@ from src.agents.router_entity_status import RouterEntityType
 from src.agents.validator_equipment import ValidatorEquipment
 from src.agents.specific_search import run_specific_research
 from utils.tavily_search_provider import TavilySearch
+from utils.llm_service import LLMService
 logger=logging.getLogger(__name__)
 
 
 
-def process_equipment(name: str, resolver, router, validator, tavily:TavilySearch):
+def process_equipment(name: str, resolver, router, validator, tavily:TavilySearch,llm:LLMService):
     entity = resolver.resolve(name)
     decision = router.route(entity)
 
     if decision == "SPECIFIC":
-        return run_specific_research(entity, sources=[], tavily_search=tavily)
+        return run_specific_research(entity, sources=[], tavily_search=tavily,llm=llm)
     if decision == "UNCERTAIN":
         result = validator.validate(entity)
 

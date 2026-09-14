@@ -7,8 +7,8 @@ from src.agents.validator_equipment import ValidatorEquipment
 from src.agents.equipment_resolver import Equipemenentity
 from utils.tavily_search_provider import TavilySearch
 from utils.llm_service import LLMService
-from src.agents.specific_search import build_search_query
-from utils.formatting_results import format_search_results
+from utils.utility_funcs import build_search_query
+from utils.utility_funcs import format_search_results
 
 logger=logging.getLogger(__name__)
 
