@@ -8,7 +8,7 @@ from src.agents.specific_search import run_specific_research
 from src.agents.extract_specific_results import extract_specific_infos
 from utils.tavily_search_provider import TavilySearch
 from utils.llm_service import LLMService
-
+from src.agents.orchestrator import process_equipment
 app = Flask(__name__)
 
 # Created once when the server starts — same dependency-injection
@@ -66,28 +66,32 @@ def index():
         hint = request.form.get("hint", "").strip()
 
         try:
-            entity = resolver.resolve(equipment_name)
-            decision = router.route(entity)
-
-            if decision == "SPECIFIC":
-                sources = run_specific_research(entity, sources=[], tavily_search=tavily, llm=llm_service)
-                final = extract_specific_infos(entity, sources, tavily, llm_service, hint)
-            elif decision == "UNCERTAIN":
-                val = validator.validate(entity)
-                final = {"decision": "UNCERTAIN", "validator_result": val}
-            else:
-                final = {"decision": "GENERAL", "note": "Pas encore implémenté"}
+            final = process_equipment(
+                equipment_name,
+                resolver,
+                router,
+                validator,
+                tavily,
+                llm_service,
+                hint
+            )
 
             result = json.dumps(
-                {"entity": entity.model_dump(), "decision": decision, "final": final},
+                final,
                 indent=2,
                 ensure_ascii=False,
+                default=str
             )
+
         except Exception as e:
             error = f"{type(e).__name__}: {e}"
 
-    return render_template_string(PAGE, equipment_name=equipment_name, hint=hint, result=result, error=error)
-
-
+    return render_template_string(
+        PAGE,
+        equipment_name=equipment_name,
+        hint=hint,
+        result=result,
+        error=error
+    )
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

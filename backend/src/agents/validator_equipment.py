@@ -53,12 +53,14 @@ class ValidatorEquipment:
     def build_validation_query(self,entity: EquipementResolver) -> str:
         parts = []
 
-        anchor = entity.model or entity.manufacturer or entity.normalized_name
-        if anchor:
-            parts.append(anchor)
-
-        if entity.manufacturer and entity.manufacturer not in (anchor or ""):
-            parts.append(entity.manufacturer)
+        if entity.normalized_name:
+            parts.append(entity.normalized_name)
+        else:
+            anchor = entity.model or entity.manufacturer
+            if anchor:
+                parts.append(anchor)
+            if entity.manufacturer and entity.manufacturer not in (anchor or ""):
+                parts.append(entity.manufacturer)
 
         if entity.category:
             parts.append(entity.category)
@@ -80,7 +82,7 @@ class ValidatorEquipment:
             manufacturer=entity.manufacturer or "inconnu",
             category=entity.category or "inconnu",
             subcategory=entity.subcategory or "inconnu",
-            search_results=self.format_search_results(result),
+            search_results=format_search_results(result),
         )
         
         response=self.llm_service.invoke(prompt)

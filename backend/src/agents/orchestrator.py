@@ -10,19 +10,19 @@ logger=logging.getLogger(__name__)
 
 
 
-def process_equipment(name: str, resolver, router, validator, tavily:TavilySearch,llm:LLMService):
+def process_equipment(name: str, resolver, router, validator, tavily:TavilySearch,llm:LLMService,hint:str):
     entity = resolver.resolve(name)
     decision = router.route(entity)
 
     if decision == "SPECIFIC":
-        return run_specific_research(entity, sources=[], tavily_search=tavily,llm=llm)
+        return run_specific_research(entity, sources=[], tavily_search=tavily,llm=llm,hints=hint)
     if decision == "UNCERTAIN":
         result = validator.validate(entity)
 
         if result["status"] == "VALID":
             entity.manufacturer = result["manufacturer"] or entity.manufacturer
             entity.model = result["model"] or entity.model
-            return run_specific_research(entity, sources=result["sources"])
+            return run_specific_research(entity, sources=[], tavily_search=tavily,llm=llm,hints=hint)
         else:
             return run_general_research(entity, sources=result["sources"])
 

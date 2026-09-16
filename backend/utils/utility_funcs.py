@@ -13,10 +13,13 @@ def merge_sources(existing: list[dict], new: list[dict]) -> list[dict]:
 def build_search_query( entity: Equipemenentity,input: str)-> str:
     extracted_query= []
     extracted_query.append(input)
-    if entity.manufacturer is not None :
-        extracted_query.append(entity.manufacturer)
-    if entity.model is not None:
-        extracted_query.append(entity.model)
+    if entity.normalized_name is not None:
+        extracted_query.append(entity.normalized_name)
+    else:
+        if entity.manufacturer is not None :
+            extracted_query.append(entity.manufacturer)
+        if entity.model is not None:
+            extracted_query.append(entity.model)
     return " ".join(extracted_query)
 def hint_chooser(input:str)-> str:
     if input:

@@ -55,6 +55,9 @@ Règles :
 - Classe chaque source selon son type : "fabricant", "distributeur", "document_technique", ou "autre".
 - Si une source semble décrire une variante légèrement différente du modèle exact, mentionne-le dans "notes".
 - Toutes les valeurs textuelles doivent être en français, sauf les noms de marque/modèle qui restent dans leur forme officielle.
+- Si plusieurs prix sont exprimés dans des devises différentes, NE LES CONVERTIS PAS toi-même ; indique clairement la devise pour chaque valeur (ex: "245,00 €" et non juste "245").
+- Si deux valeurs représentent le même prix mais avec une notation de devise différente (ex: "₹" et "Rs" pour la roupie indienne), ne les compte qu'UNE SEULE FOIS.
+- Si les prix couvrent plusieurs devises très différentes, regroupe-les par devise dans "valeurs_observees" plutôt que de les lister en vrac (ex: ["EUR: 122,50–245,00 €", "USD: 90,00–190,00 $", "INR: 12 500,00 ₹"]).
 """
 
 def extract_specific_infos(entity:Equipemenentity,sources:list[dict],tavily:TavilySearch,llm:LLMService,hints:str)->dict:

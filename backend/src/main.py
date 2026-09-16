@@ -15,7 +15,7 @@ def main():
     router = RouterEntityType()
     validator = ValidatorEquipment(tavily, llm_service)
 
-    result = process_equipment("Grundfos CR 15-4", resolver, router, validator,tavily,llm_service)
+    result = process_equipment("manette xbox 360", resolver, router, validator,tavily,llm_service,"none")
     print(result)
 
 if __name__ == "__main__":

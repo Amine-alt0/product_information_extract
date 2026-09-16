@@ -37,10 +37,10 @@ Règles :
 
 def discovery_search(entity: Equipemenentity,purpose:str,llm:LLMService,tavily:TavilySearch)->list[dict]:
     if purpose=="price":
-        input="le prix de "
+        input="le prix de"
         purposeofdescription = "d'informations sur le prix (marketplaces, distributeurs, fournisseurs)"
     else:
-        input="la fiche technique de "
+        input="la fiche technique de"
         purposeofdescription="de spécifications techniques (sites de fabricant, catalogues industriels, annuaires techniques)"
     discovery_query=build_search_query(entity,input)
     results=tavily.search(query=discovery_query,search_depth="basic")
