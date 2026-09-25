@@ -40,10 +40,6 @@ Règles :
 - N'invente aucune information absente des résultats.
 """
 
-class ValidationResult(BaseModel):
-    status: str  # "VALID" | "INVALID" | "STILL_UNCERTAIN"
-    updated_entity: Equipemenentity | None
-    evidence_sources: list[dict]  # the Tavily results, kept for reuse
     
 class ValidatorEquipment:
     def __init__(self,tavily_search,llm_service):

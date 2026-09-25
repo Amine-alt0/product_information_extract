@@ -18,8 +18,8 @@ def run_specific_research( entity: Equipemenentity, sources:list[dict], tavily_s
     query=build_search_query(entity,"la fiche technique de")
     results=tavily_search.search(query=query,search_depth="advanced")
     sources=merge_sources(sources,results)
-    
-    price_results=discovery_search(entity,"price",llm,tavily_search)
+    discovery_query=build_search_query(entity,"le prix de")
+    price_results=discovery_search(entity,"price",llm,tavily_search,discovery_query)
     sources=merge_sources(sources,price_results)
     
     pre_results=extract_specific_infos(entity,sources,tavily_search,llm,hints)
@@ -27,10 +27,12 @@ def run_specific_research( entity: Equipemenentity, sources:list[dict], tavily_s
     if missing_text:
         logger.info("we have a fall back here ")
         if "prix" in missing_text:
-            new_results = discovery_search(entity, "price", llm, tavily_search)
+            new_query = build_search_query(entity, "le prix de ")
+            new_results = discovery_search(entity, "price", llm, tavily_search,new_query)
             sources = merge_sources(sources, new_results)
         if "caractéristiques" in missing_text:
-            new_results = discovery_search(entity, "specs", llm, tavily_search)
+            new_query = build_search_query(entity, "la fiche technique de ")
+            new_results = discovery_search(entity, "specs", llm, tavily_search,new_query)
             sources = merge_sources(sources, new_results)
 
         result = extract_specific_infos(entity, sources, tavily_search, llm, hints=missing_text)

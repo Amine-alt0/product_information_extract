@@ -1,0 +1,106 @@
+{
+  "iphone 13": {
+    "result": {
+      "usage": "Téléphone mobile 5G avec écran OLED Super Retina XDR de 6,1 pouces, puce A15 Bionic, double système photo 12 MP, stockage 128/256/512 Go, résistance IP68 et Face ID",
+      "caracteristiques_techniques": [
+        {
+          "nom": "Écran",
+          "valeur": "Super Retina XDR OLED, 6,1 pouces, résolution 2532 x 1170 pixels, 460 ppp, HDR, True Tone, gamme de couleurs P3, contraste 2 000 000:1, luminosité max 800 nits (standard), 1 200 nits (HDR), revêtement oléophobe",
+          "source": "support.apple.com"
+        },
+        {
+          "nom": "Puce",
+          "valeur": "A15 Bionic, CPU 6 cœurs (2 cœurs performance + 4 cœurs haute efficacité), GPU 4 cœurs, Neural Engine 16 cœurs",
+          "source": "support.apple.com"
+        },
+        {
+          "nom": "Capacité de stockage",
+          "valeur": "128 Go, 256 Go, 512 Go",
+          "source": "support.apple.com"
+        },
+        {
+          "nom": "RAM",
+          "valeur": "4 Go",
+          "source": "certideal.com"
+        },
+        {
+          "nom": "Résistance à l'eau et à la poussière",
+          "valeur": "IP68 (jusqu'à 6 mètres pendant 30 minutes maximum)",
+          "source": "support.apple.com"
+        },
+        {
+          "nom": "Appareil photo principal",
+          "valeur": "Double 12 Mpx (objectif principal et ultra-grand-angle)",
+          "source": "support.apple.com"
+        },
+        {
+          "nom": "Dimensions et poids",
+          "valeur": "71,5 mm large x 146,7 mm haut x 7,65 mm épais, 174 g",
+          "source": "support.apple.com"
+        },
+        {
+          "nom": "Connectivité",
+          "valeur": "5G, Wi-Fi 6, GPS, NFC, Apple Pay",
+          "source": "01net.com"
+        }
+      ],
+      "prix": {
+        "valeurs_observees": [
+          "EUR: 234,00–1136,21 €",
+          "USD: 247,00–629,00 $"
+        ],
+        "sources": [
+          "apple.com",
+          "backmarket.com",
+          "idealo.fr"
+        ],
+        "note": "Prix variables selon condition (neuf/révisé/occas), capacité de stockage, couleur et vendeur ; fourchettes comprises d'occasions à 234,00 € à de nouveaux modèles à 1136,21 € en EUR, et de 247,00 $ à 629,00 $ en USD sur le marché secondaire."
+      },
+      "sources": [
+        {
+          "url": "https://smaaart.fr/blog/iphone-13-details",
+          "type": "distributeur"
+        },
+        {
+          "url": "https://www.01net.com/tests/apple-iphone-13-fiche-technique-65839.html",
+          "type": "distributeur"
+        },
+        {
+          "url": "https://support.apple.com/fr-fr/111872",
+          "type": "document_technique"
+        },
+        {
+          "url": "https://certideal.com/content/145-apple-iphone-13-fiche-technique-prix-avis",
+          "type": "distributeur"
+        },
+        {
+          "url": "https://apple.econocom.com/business/wp-content/uploads/sites/3/2022/08/Apple_iPhone-13_2022.pdf",
+          "type": "document_technique"
+        },
+        {
+          "url": "https://www.apple.com/fr/newsroom/2021/09/apple-introduces-iphone-13-and-iphone-13-mini",
+          "type": "fabricant"
+        },
+        {
+          "url": "https://www.backmarket.com/en-us/price-guide/iphone-13",
+          "type": "distributeur"
+        },
+        {
+          "url": "https://www.idealo.fr/prix/201569519/apple-iphone-13-128-go-minuit.html",
+          "type": "distributeur"
+        },
+        {
+          "url": "https://www.idealo.fr/prix/201438990/apple-iphone-13-128-go-bleu.html",
+          "type": "distributeur"
+        },
+        {
+          "url": "https://www.idealo.fr/prix/201438991/apple-iphone-13-mini.html",
+          "type": "distributeur"
+        }
+      ],
+      "notes": "Source #10 concerne l'iPhone 13 mini (écran 5,4\"), différent du modèle identifié iPhone 13 (6,1\"), écarté des prix mais conservé en référence. Légère variation de poids observée (174 g vs 173 g selon sources Apple). Prix variables selon état (neuf/révisé/occas), capacité de stockage, couleur et marché (EUR/USD). Correspondance globale parfaite avec l'équipement identifié iPhone 13."
+    },
+    "decision": "SPECIFIC",
+    "cached_at": "2026-09-22T21:27:20.874133"
+  }
+}

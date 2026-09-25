@@ -1,9 +1,6 @@
 import os 
 import logging
 import json
-from src.agents.equipment_resolver import EquipementResolver
-from src.agents.router_entity_status import RouterEntityType
-from src.agents.validator_equipment import ValidatorEquipment
 from src.agents.equipment_resolver import Equipemenentity
 from utils.tavily_search_provider import TavilySearch
 from utils.llm_service import LLMService
@@ -35,14 +32,11 @@ Règles :
 - Si aucun résultat n'est pertinent, renvoie une liste vide.
 """
 
-def discovery_search(entity: Equipemenentity,purpose:str,llm:LLMService,tavily:TavilySearch)->list[dict]:
+def discovery_search(entity: Equipemenentity,purpose:str,llm:LLMService,tavily:TavilySearch,discovery_query:str)->list[dict]:
     if purpose=="price":
-        input="le prix de"
         purposeofdescription = "d'informations sur le prix (marketplaces, distributeurs, fournisseurs)"
     else:
-        input="la fiche technique de"
         purposeofdescription="de spécifications techniques (sites de fabricant, catalogues industriels, annuaires techniques)"
-    discovery_query=build_search_query(entity,input)
     results=tavily.search(query=discovery_query,search_depth="basic")
     
     prompt=DOMAIN_FILTER_PROMPT.format(
@@ -71,6 +65,7 @@ def discovery_search(entity: Equipemenentity,purpose:str,llm:LLMService,tavily:T
         search_depth="advanced",
         max_results=5,
         include_domains=domains,
+        include_raw_content=True,
     )
     return final_result
     

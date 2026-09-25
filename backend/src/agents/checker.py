@@ -13,6 +13,7 @@ from utils.utility_funcs import build_search_query,merge_sources,hint_chooser,fo
 logger=logging.getLogger(__name__)
 
 def check(results: dict) -> str:
+    logger.info("checking the final results")
     missing = []
 
     if not results.get("usage"):
